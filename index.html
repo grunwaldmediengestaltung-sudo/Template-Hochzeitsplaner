@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unsere Hochzeit · Planung</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3328">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="brand">
+      <img src="icons/logo.png" alt="Grunwald Photography" class="brand-logo">
+    </div>
+    <div class="brand-meta">
+      <strong id="brandNames">Lena &amp; Tobias</strong>
+      <span id="brandDate">14. September 2026</span>
+    </div>
+
+    <div class="nav-row">
+      <ul class="nav-list" id="navList">
+        <li data-view="uebersicht" class="active"><span class="nav-icon">◐</span> Übersicht</li>
+        <li data-view="timeline"><span class="nav-icon">⟿</span> Ablaufplan</li>
+        <li data-view="shotlist"><span class="nav-icon">◎</span> Wunschfotos</li>
+        <li data-view="locations"><span class="nav-icon">⌖</span> Locations</li>
+        <li data-view="kontakte"><span class="nav-icon">✉</span> Kontakte</li>
+        <li data-view="moodboard"><span class="nav-icon">▣</span> Moodboard</li>
+        <li data-view="vertrag"><span class="nav-icon">⎘</span> Vertrag</li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <span id="syncStatus" class="sync-status">● gespeichert</span>
+        <button class="admin-link" id="adminBtn" type="button">⚙ Admin</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Übersicht -->
+    <section class="view active" id="view-uebersicht">
+      <div class="hero-banner" id="heroBanner" style="display:none;">
+        <img id="heroBannerImg" src="" alt="">
+        <div class="hero-overlay">
+          <span class="eyebrow">Unsere Hochzeit</span>
+          <h1 id="heroBannerNames"></h1>
+        </div>
+      </div>
+
+      <header class="view-header">
+        <h1>Willkommen</h1>
+        <p class="subtitle">Alles für euren Tag — an einem Ort, jederzeit aktuell für euch beide und Grunwald Photography.</p>
+      </header>
+
+      <div class="grid grid-3">
+        <div class="card stat-card stat-card-link" data-view="timeline" role="button" tabindex="0">
+          <span class="stat-label">Programmpunkte</span>
+          <span class="stat-value" id="statTimeline">0</span>
+        </div>
+        <div class="card stat-card stat-card-link" data-view="shotlist" role="button" tabindex="0">
+          <span class="stat-label">Wunschfotos</span>
+          <span class="stat-value" id="statShotlist">0</span>
+        </div>
+        <div class="card stat-card stat-card-link" data-view="locations" role="button" tabindex="0">
+          <span class="stat-label">Locations</span>
+          <span class="stat-value" id="statLocations">0</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>So funktioniert's</h2>
+        <p>Diese Seite ist das Hochzeitspaar, deren Trauzeugen und für uns gleichzeitig sichtbar. Liebes Hochzeitspaar, tragt eure Wünsche und Zeitplan ein, ladet Inspirationsbilder hoch — alle Änderungen werden automatisch gespeichert und sind für alle direkt sichtbar.</p>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="view" id="view-timeline">
+      <header class="view-header">
+        <h1>Ablaufplan</h1>
+        <p class="subtitle">Der Fahrplan für euren Tag — von den ersten Vorbereitungen bis zur letzten Tanzrunde.</p>
+      </header>
+
+      <button class="btn btn-primary" id="addTimelineBtn">+ Programmpunkt</button>
+
+      <div class="timeline" id="timelineList"></div>
+    </section>
+
+    <!-- Shotlist -->
+    <section class="view" id="view-shotlist">
+      <header class="view-header">
+        <h1>Wunschfotos</h1>
+        <p class="subtitle">Welche Fotos sind euch besonders wichtig? Tragt eure Wünsche ein — wir achten am Tag gezielt darauf. Zieht Karten auf eine Location, um sie zu gruppieren.</p>
+      </header>
+
+      <button class="btn btn-ghost" id="backToShotOverviewBtn" style="display:none;">← Zurück zur Übersicht</button>
+      <h2 id="shotContainerHeading" class="shot-container-heading" style="display:none;"></h2>
+
+      <div class="shotlist-actions">
+        <button class="btn btn-primary" id="addShotBtn">+ Foto-Wunsch</button>
+        <button class="btn btn-ghost" id="addShotContainerBtn">+ Location</button>
+      </div>
+
+      <div class="shot-container-grid" id="shotContainerGrid"></div>
+
+      <div class="shot-grid" id="shotlistList"></div>
+    </section>
+
+    <!-- Locations -->
+    <section class="view" id="view-locations">
+      <header class="view-header">
+        <h1>Locations</h1>
+        <p class="subtitle">Alle Orte des Tages auf einen Blick.</p>
+      </header>
+
+      <button class="btn btn-primary" id="addLocationBtn">+ Location</button>
+
+      <div class="location-list" id="locationsList"></div>
+    </section>
+
+    <!-- Kontakte -->
+    <section class="view" id="view-kontakte">
+      <header class="view-header">
+        <h1>Kontakte</h1>
+        <p class="subtitle">Wichtige Ansprechpartner für den Tag.</p>
+      </header>
+
+      <button class="btn btn-primary" id="addContactBtn">+ Kontakt</button>
+
+      <div class="contact-grid" id="contactsList"></div>
+    </section>
+
+    <!-- Moodboard -->
+    <section class="view" id="view-moodboard">
+      <header class="view-header">
+        <h1>Moodboard</h1>
+        <p class="subtitle">Stile, Posen und Stimmungen, die euch gefallen — als Inspiration für unser Shooting.</p>
+      </header>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="moodboardInput" accept="image/*" multiple hidden>
+        <span class="upload-icon">＋</span>
+        <span>Bilder hochladen oder hier ablegen</span>
+      </div>
+
+      <div class="moodboard-grid" id="moodboardList"></div>
+    </section>
+
+    <!-- Vertrag -->
+    <section class="view" id="view-vertrag">
+      <header class="view-header">
+        <h1>Vertrag</h1>
+        <p class="subtitle">Euer Shooting-Vertrag zum Nachlesen und Herunterladen.</p>
+      </header>
+
+      <div class="card contract-card">
+        <div id="contractView">
+          <p>Noch kein Vertrag hinterlegt.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- WhatsApp Floating Button -->
+<a href="#" id="whatsappBtn" class="whatsapp-fab" target="_blank" rel="noopener" style="display:none;" title="Zur WhatsApp-Gruppe">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+    <path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.74 13.4L3 21l3.7-1.27a8.9 8.9 0 0 0 4.31 1.1h.05a8.94 8.94 0 0 0 8.93-8.9 8.84 8.84 0 0 0-2.39-5.6zm-5.55 13.7a7.4 7.4 0 0 1-3.78-1.04l-.27-.16-2.81.96.94-2.74-.18-.28a7.43 7.43 0 0 1-1.15-3.98 7.45 7.45 0 1 1 7.45 7.45zm4.08-5.58c-.22-.11-1.31-.65-1.51-.72-.2-.07-.35-.11-.5.11-.15.22-.57.72-.7.86-.13.15-.26.16-.48.05-1.32-.66-2.18-1.18-3.05-2.67-.23-.4.23-.37.66-1.23.07-.15.04-.28-.03-.4-.07-.11-.5-1.2-.69-1.65-.18-.43-.37-.37-.5-.38-.13 0-.28-.01-.43-.01-.15 0-.39.06-.6.28-.2.22-.78.76-.78 1.85 0 1.1.8 2.16.91 2.31.11.15 1.55 2.37 3.76 3.23 1.87.73 2.25.59 2.66.55.4-.04 1.31-.54 1.5-1.06.18-.52.18-.96.13-1.06-.06-.1-.22-.16-.45-.27z"/>
+  </svg>
+</a>
+
+<!-- Generic Modal for forms -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
