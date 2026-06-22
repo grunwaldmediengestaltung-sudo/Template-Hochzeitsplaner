@@ -3,10 +3,11 @@
    ========================================================= */
 
 const API_URL = '/.netlify/functions/data';
-const SAVE_DEBOUNCE_MS = 700;
+const SAVE_DEBOUNCE_MS = 200;
 const AUTO_REFRESH_MS = 5000;
 
 let lastKnownDataString = null;
+let isSaving = false;
 
 // Feste Kontakte, immer sichtbar, nicht löschbar, bleiben beim Projekt-Reset erhalten
 const FIXED_CONTACTS = [
@@ -409,6 +410,7 @@ function queueSave(){
 }
 
 async function saveState(){
+  isSaving = true;
   localStorage.setItem('hochzeit-cache', JSON.stringify(state));
   try{
     const res = await fetch(API_URL, {
@@ -422,6 +424,8 @@ async function saveState(){
   }catch(e){
     console.error(e);
     setSyncStatus('error');
+  } finally {
+    isSaving = false;
   }
 }
 
@@ -453,7 +457,7 @@ function setSyncStatus(status){
 function startAutoRefresh(){
   setInterval(async () => {
     if(lastKnownDataString === null) return;
-    if(saveTimer) return; // eigene Änderung wartet noch auf das Speichern
+    if(saveTimer || isSaving) return; // eigene Änderung wartet noch oder läuft gerade
     if(document.getElementById('modalOverlay').classList.contains('active')) return;
     if(document.body.classList.contains('dragging-active')) return;
 
